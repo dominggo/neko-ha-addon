@@ -17,5 +17,14 @@ if [ -n "$EXT_IP" ]; then
   echo "[neko] External IP detected: $EXT_IP"
 fi
 
-echo "[neko] Starting Neko: screen=$NEKO_SCREEN, port=8080, WebRTC=$NEKO_EPR"
-exec /docker-entrypoint.sh
+echo "[neko] Starting: screen=$NEKO_SCREEN, port=8080, WebRTC=$NEKO_EPR"
+
+# Find supervisord config (neko image uses supervisord)
+for conf in /etc/neko/supervisord.conf /etc/supervisord.conf /etc/supervisor/supervisord.conf; do
+  if [ -f "$conf" ]; then
+    exec /usr/bin/supervisord -c "$conf"
+  fi
+done
+
+# Fallback: run supervisord without explicit config
+exec /usr/bin/supervisord
