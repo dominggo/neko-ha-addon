@@ -1,0 +1,22 @@
+name: "Neko Browser"
+version: "1.0.0"
+slug: "neko_browser"
+description: "Remote Chromium browser streaming via Neko - single container, WebRTC-based"
+url: "https://github.com/m1k1o/neko"
+arch:
+  - amd64
+startup: application
+boot: auto
+ports:
+  8080/tcp: 8080
+  52000-52100/udp: 52000-52100
+options:
+  password: "neko"
+  admin_password: "admin"
+  resolution: "1920x1080@30"
+schema:
+  password: str
+  admin_password: str
+  resolution: str
+map:
+  - data:rw
